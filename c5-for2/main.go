@@ -13,7 +13,7 @@ func main()  {
 		if err != nil {
 			fmt.Println("Entrada inválida, digite novamente")
 			var discard string
-      fmt.Scanln(&discard) 
+      		fmt.Scanln(&discard) 
 			continue
 		}
 		if age >= 18 {
