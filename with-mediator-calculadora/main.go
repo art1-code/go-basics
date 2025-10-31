@@ -70,6 +70,7 @@ func (m *Mediator) SolicitarOperacao() error {
 	return nil
 }
 
+// realiza a operacao de acordo com os parametros passados
 func (m *Mediator) ExacutaOperacao() error {
 	switch m.operacao {
 	case "+":
@@ -89,6 +90,7 @@ func (m *Mediator) ExacutaOperacao() error {
 	return nil
 }
 
+// executa todas as funcs
 func (m *Mediator) Execute() {
 	for {
 		if err := m.SolicitarValores(); err != nil {
@@ -108,13 +110,14 @@ func (m *Mediator) Execute() {
 	}
 }
 
+// funcao usada para criar um novo Mediator
 func NewMediator(c *Calculadora) *Mediator {
 	return &Mediator{calculadora: c}
 }
 
 // ----------------- Função Main ----------------
 func main() {
-	calculadora := Calculadora{}
-	mediator := NewMediator(&calculadora)
-	mediator.Execute()
+	calculadora := &Calculadora{}        // instancia uma Calculadora e ao mesmo tempo guarda a referencia de memoria na variavel "calculadora"
+	mediator := NewMediator(calculadora) // cria um novo mediator passando o local da memoria onde está a Calculadora
+	mediator.Execute()                   // executa o programa
 }
