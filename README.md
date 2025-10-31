@@ -1,37 +1,37 @@
-# Go Basics Learning Repository
 
-This repository contains my journey learning Go (Golang) through practical examples and exercises.
+# Go Basics & Math Projects Repository
 
-## Repository Structure
+Este repositório reúne exemplos, exercícios e projetos desenvolvidos durante o aprendizado de Go (Golang), incluindo implementações matemáticas e uso de padrões como Mediator.
 
-The repository is organized into different chapters/concepts:
+## Estrutura do Repositório
 
-- `c1-fc/` - First contact with Go
-- `c2-sum/` - Learning about arithmetic operations
-- `c3-age/` - Working with variables and basic data types
-- `c4-for/` - Introduction to loops in Go
-- `c5-for2/` - Advanced loop concepts and implementations
+O repositório está organizado em diretórios que abordam diferentes conceitos e projetos:
 
+- `c1-fc/` — Primeiro contato com Go
+- `c2-sum/` — Operações aritméticas
+- `c3-age/` — Variáveis e tipos básicos
+- `c4-for/` — Laços de repetição
+- `c5-for2/` — Laços avançados
+- `c6-functions/` — Funções
+- `c7-ponteiros/` — Ponteiros
+- `c8-struct/` — Structs
+- `ex-calculadora/` — Exemplo de calculadora simples
+- `my_project_math/` — Projeto de matemática com tipos, calculadora e padrão Mediator
+- `with-mediator-calculadora/` — Calculadora com padrão Mediator
 
-## Purpose
+## Propósito
 
-This repository serves as a practical learning ground for Go programming concepts. Each directory contains specific examples and exercises that help in understanding different aspects of the language.
+O objetivo é servir como base prática para o estudo de Go, incluindo desde conceitos básicos até projetos mais avançados envolvendo matemática e padrões de projeto.
 
-## Getting Started
+## Como Executar
 
-To run these examples, you need to:
+1. Instale o Go: [golang.org](https://golang.org)
+2. Clone este repositório
+3. Navegue até o diretório desejado
+4. Execute o exemplo ou projeto com: `go run main.go`
 
-1. Install Go on your machine from [golang.org](https://golang.org)
-2. Clone this repository
-3. Navigate to any example directory
-4. Run the example using: `go run main.go`
+## Contribuição
 
-## Learning Progress
+Sugestões e melhorias são bem-vindas! Sinta-se à vontade para explorar o código e enviar pull requests.
 
-Each directory represents a step in the learning process, starting from basic concepts and progressively moving to more advanced topics.
-
-## Contributing
-
-Feel free to explore the code and suggest improvements. Pull requests are welcome!
-
-Happy coding! 🚀
+Boas práticas e aprendizado contínuo! 🚀
