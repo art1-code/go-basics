@@ -1,40 +1,10 @@
-package main
+package types
 
 import (
 	"errors"
 	"fmt"
 )
 
-// ----------------- Calculadora ----------------
-
-type Calculadora struct {
-	Operador1 float64
-	Operador2 float64
-}
-
-func (c *Calculadora) Dividir() (float64, error) {
-	if c.Operador2 == 0 {
-		return 0, errors.New("Erro na divisão!")
-	}
-	return (c.Operador1 / c.Operador2), nil
-}
-
-func (c *Calculadora) Adicionar() float64 {
-	return c.Operador1 + c.Operador2
-}
-
-func (c *Calculadora) Substrair() float64 {
-	return c.Operador1 - c.Operador2
-}
-
-func (c *Calculadora) Multiplicar() float64 {
-	return c.Operador1 * c.Operador2
-
-}
-
-// ----------------- Mediator ----------------
-
-// Cria struct que vai mediar as ações na calculadora
 type Mediator struct {
 	calculadora *Calculadora
 	operacao    string
@@ -44,11 +14,11 @@ type Mediator struct {
 func (m *Mediator) SolicitarValores() error {
 	fmt.Println("Digite o primeiro número:")
 	if _, err := fmt.Scanln(&m.calculadora.Operador1); err != nil {
-		return errors.New("Erro na primeira entrada")
+		return errors.New("erro na primeira entrada")
 	}
 	fmt.Println("Digite o segundo número:")
 	if _, err := fmt.Scanln(&m.calculadora.Operador2); err != nil {
-		return errors.New("Erro na segunda entrada")
+		return errors.New("erro na segunda entrada")
 	}
 	return nil
 }
@@ -58,14 +28,14 @@ func (m *Mediator) SolicitarOperacao() error {
 	fmt.Println("Digite a operacao desejada:")
 	var operacao string
 	if _, err := fmt.Scanln(&operacao); err != nil {
-		return errors.New("Erro na entrada da operacao")
+		return errors.New("erro na entrada da operação")
 	}
 
 	switch operacao {
 	case "+", "-", "/", "*":
 		m.operacao = operacao
 	default:
-		return errors.New("Operacao inválida")
+		return errors.New("erro na operacao")
 	}
 	return nil
 }
@@ -82,6 +52,8 @@ func (m *Mediator) ExacutaOperacao() error {
 	case "/":
 		if resultado, err := m.calculadora.Dividir(); err == nil {
 			fmt.Println("Resultado: ", resultado)
+		} else {
+			fmt.Println(err)
 		}
 	default:
 		break
@@ -113,11 +85,4 @@ func (m *Mediator) Execute() {
 // funcao usada para criar um novo Mediator
 func NewMediator(c *Calculadora) *Mediator {
 	return &Mediator{calculadora: c}
-}
-
-// ----------------- Função Main ----------------
-func main() {
-	calculadora := &Calculadora{}        // instancia uma Calculadora e ao mesmo tempo guarda a referencia de memoria na variavel "calculadora"
-	mediator := NewMediator(calculadora) // cria um novo mediator passando o local da memoria onde está a Calculadora
-	mediator.Execute()
 }
