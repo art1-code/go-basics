@@ -1,69 +1,105 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Calculadora struct {
 	Operador1 float64
 	Operador2 float64
 }
 
-func (c *Calculadora) Dividir() (float64,error) {
+type Runner struct {
+	calculadora *Calculadora
+	resultado   float64
+	operacao    string
+}
+
+func (c *Calculadora) Dividir() (float64, error) {
 	if c.Operador2 == 0 {
-		return 0, fmt.Errorf("Erro na divisão!")
+		return 0, errors.New("Erro na divisão!")
 	}
-	result := c.Operador1 / c.Operador2
-	return result, nil
+	return (c.Operador1 / c.Operador2), nil
 }
 
-func (c *Calculadora) Adicionar() (float64) {
-	result := c.Operador1 + c.Operador2
-	return result
+func (c *Calculadora) Adicionar() float64 {
+	return c.Operador1 + c.Operador2
 }
 
-func (c *Calculadora) Substrair() (float64) {
-	result := c.Operador1 - c.Operador2
-	return result
+func (c *Calculadora) Substrair() float64 {
+	return c.Operador1 - c.Operador2
 }
 
-func (c *Calculadora) Multiplicar() (float64) {
-	result := c.Operador1 * c.Operador2
-	return result
+func (c *Calculadora) Multiplicar() float64 {
+	return c.Operador1 * c.Operador2
+
 }
 
+func (r *Runner) SolicitaOperadores() error {
+	fmt.Println("Digite o primeiro operador:")
+	_, err1 := fmt.Scanln(&r.calculadora.Operador1)
+	if err1 != nil {
+		return errors.New("Operador não é válido")
+	}
 
-func main()  {
-	fmt.Println("Eis calculadora mestra!")
-	var num1 float64
-	var num2 float64
-	var operacao string
-	var result float64
-	
-	fmt.Printf("Digite o primeiro operador: ")
-	fmt.Scanln(&num1)
-	fmt.Printf("Digite a operação: ")
-	fmt.Scanln(&operacao)
-	fmt.Printf("Digite o segundo operador: ")
-	fmt.Scanln(&num2)
-			
-	calculadora := Calculadora{num1, num2}
-	
-	switch operacao {
+	fmt.Println("Digite o segundo operador:")
+	_, err2 := fmt.Scanln(&r.calculadora.Operador2)
+	if err2 != nil {
+		return errors.New("Operador não é válido")
+	}
+
+	return nil
+}
+
+func (r *Runner) SolicitaOperacao() (float64, error) {
+
+	fmt.Println("Digite a operacao:")
+	_, err := fmt.Scanln(&r.operacao)
+	if err != nil {
+		return 0, errors.New("Erro encontrado durante a entrada")
+	}
+	switch r.operacao {
+	case "+", "/", "-", "*":
+		return r.ExecutaOperacao()
+	default:
+		return 0, errors.New("Operacao Inválida")
+	}
+}
+
+func (r *Runner) ExecutaOperacao() (float64, error) {
+	switch r.operacao {
 	case "+":
-		result = calculadora.Adicionar()
+		r.resultado = r.calculadora.Adicionar()
 	case "-":
-		result = calculadora.Substrair()
+		r.resultado = r.calculadora.Substrair()
 	case "*":
-		result = calculadora.Multiplicar()
+		r.resultado = r.calculadora.Multiplicar()
 	case "/":
-		resultDivisao, err := calculadora.Dividir()
+		result, err := r.calculadora.Dividir()
 		if err != nil {
-		fmt.Printf("Erro encontrado: %s", err)
-		return
+			return 0, errors.New("Erro encontrado")
 		}
-		result = resultDivisao
+		r.resultado = result
 	}
+	return r.resultado, nil
+}
 
-	fmt.Printf("O resultado da operação é : %f", result)
+func (r *Runner) Execute() {
+	r.SolicitaOperadores()
 
+	r.SolicitaOperacao()
+}
+
+func NewRunner(c *Calculadora) *Runner {
+	return &Runner{c, 0, ""}
+}
+
+func main() {
+	fmt.Println("Eis calculadora mestra!")
+	calculadora := &Calculadora{}
+	r := NewRunner(calculadora)
+	r.Execute()
+	fmt.Printf("O resultado da operação é : %f", r.resultado)
 
 }
